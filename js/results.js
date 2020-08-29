@@ -69,7 +69,7 @@ function resultTeam(data) {
     team = JSON.parse(JSON.stringify(team).replace(/http:/g, "https:"));
     teamsHTML += `
               <div  class="col s12 m6 l4">
-                <a href="../pages/detail.html?id=${team.id}">
+                <a href="/pages/detail.html?id=${team.id}">
                   <div class="card">
                     <div class="card-image waves-effect waves-block waves-light">
                       <img class="activator" src="${team.crestUrl}" alt="image-team">
@@ -131,7 +131,7 @@ function resultSavedTeam(teams) {
     teams.forEach(function (team) {
       teamsHTML += `
                       <div  class="col s12 m6 l4">
-                        <a href="../pages/detail.html?id=${team.id}&saved=true">
+                        <a href="/pages/detail.html?id=${team.id}&saved=true">
                           <div class="card">
                             <div class="card-image waves-effect waves-block waves-light">
                               <img class="activator" src="${team.crestUrl}" alt="image-team">
