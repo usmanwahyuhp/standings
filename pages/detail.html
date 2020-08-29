@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Champion League Classement</title>
+    <meta name="description" content="My first PWA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/materialize.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/idb.js"></script>
+    <script src="../js/db.js"></script>
+    <script src="../js/api.js"></script>
+  </head>
+  <body>
+    <div class="top-info">
+      <div class="container">
+        <h6 class="left">Champions League Classement</h6>
+        <div class="med-sos right">
+          <a href="#" class="fa fa-facebook"></a>
+          <a href="#" class="fa fa-twitter"></a>
+          <a href="#" class="fa fa-instagram"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="logo container center">
+      <img src="../assets/champion.png" alt="" class="responsive-img" />
+    </div>
+    <!-- Navigasi -->
+    <nav class="nav-center" role="navigation">
+      <div class="nav-wrapper container">
+        <ul>
+          <li>
+            <a
+              href="../index.html"
+              data-target="nav-mobile"
+              class="waves-effect btn back"
+              >&#8647;</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+
+    <main>
+      <div class="body-content container center" id="team"></div>
+      <div class="fixed-action-btn">
+        <a class="btn-floating btn-large" id="save">
+          <i class="large material-icons">save</i>
+        </a>
+      </div>
+      <div class="fixed-action-btn">
+        <a class="btn-floating btn-large" id="delete">
+          <i class="large material-icons">delete</i>
+        </a>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-copyright">
+        <div class="center grey darken-1 text">© 2020 Submission PWA's</div>
+      </div>
+    </footer>
+
+    <script src="../js/materialize.min.js"></script>
+    <!-- <script src="js/nav.js"></script>? -->
+    <script>
+      // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function () {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function () {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // var urlParams = new URLSearchParams(window.location.search);
+        // var isFromSaved = urlParams.get("saved");
+        // var btnSave = document.getElementById("save");
+        // if (isFromSaved) {
+        //   // Hide fab jika dimuat dari indexed db
+        //   btnSave.style.display = "none";
+
+        //   // ambil artikel lalu tampilkan
+        //   getSavedTeamById();
+        // } else {
+        //   var item = getTeamById();
+        // }
+        // btnSave.onclick = function () {
+        //   console.log("Tombol FAB di klik.");
+        //   item.then(function (team) {
+        //     saveForLater(team);
+        //   });
+        // };
+
+        ///last//
+        var urlParams = new URLSearchParams(window.location.search);
+        var idParam = urlParams.get("id");
+        var isFromSaved = urlParams.get("saved");
+        console.log("isFromSaved");
+        console.log(isFromSaved);
+        let save = document.getElementById("save");
+        let hapus = document.getElementById("delete");
+        // let savedo = false;
+        if (isFromSaved) {
+          console.log("isfromsaved");
+          save.style.display = "none";
+
+          let deleteItem = getSavedTeamById();
+
+          hapus.onclick = function () {
+            console.log("tombol DELETE di Klik!");
+            deleteItem.then(function (idParam) {
+              deleteByid(idParam);
+            });
+          };
+        } else if (isFromSaved == null) {
+          console.log("getTeamsByid");
+          hapus.style.display = "none";
+
+          let item = getTeamByid();
+
+          save.onclick = function () {
+            console.log("tombol FAB di klik!");
+            item.then(function (team) {
+              saveForLater(team);
+            });
+          };
+        }
+      });
+    </script>
+  </body>
+</html>
