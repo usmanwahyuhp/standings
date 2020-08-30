@@ -3,7 +3,7 @@
   "gcm_sender_id": "41616740540",
   "short_name": "Champions",
   "description": "Champions League Classement",
-  "start_url": "/",
+  "start_url": "/standings.github.io/index.html",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#FFFFFF",
