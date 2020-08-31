@@ -30,6 +30,11 @@ workbox.precaching.precacheAndRoute(
     { url: "/pages/saved.html", revision: "1" },
     { url: "/pages/score.html", revision: "1" },
     { url: "/pages/team.html", revision: "1" },
+    { url: "./assets/champion.png", revision: "1" },
+    { url: "./assets/icon-192x192.png", revision: "1" },
+    { url: "./assets/icon-512x512.png", revision: "1" },
+    { url: "./assets/icon-96x96.png", revision: "1" },
+    { url: "./assets/", revision: "1" },
   ],
   {
     ignoreUrlParametersMatching: [/.*/],
@@ -42,6 +47,19 @@ workbox.precaching.precacheAndRoute(
 //     cacheName: "pages",
 //   })
 // );
+
+workbox.routing.registerRoute(
+  ({ url }) => url.origin,
+  workbox.strategies.cacheFirst({
+    cacheName: "images",
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 60,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
+      }),
+    ],
+  })
+);
 
 workbox.routing.registerRoute(
   /\.(?:png|gif|jpg|jpeg|svg)$/,
